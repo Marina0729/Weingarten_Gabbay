@@ -1,0 +1,38 @@
+---
+title: "Weingarten_Gabbay"
+author: "Marina Alexander"
+date: "17/04/2020"
+output:
+  pdf_document: default
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+
+# remind R where to look for libraries
+.libPaths(c("C:/Users/ale097/Data School/Packages"))
+# load libraries
+library(tidyverse)
+library(dplyr)
+library(knitr)
+library(cowplot)
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = 'center'
+)
+```
+
+```{r read in and filter the data}
+
+Weingarten_data <- read_csv("data/Weingarten_Gabbay_viral_capindependent.csv") %>% 
+  filter(eGFP_expression != "NaN") %>% 
+  filter(grepl('bola|corona|pneumo|arainflu|syncytial|Mumps|Nipa|Rabies|Zika|Measles|Hendra|Japan|West|marburg', Virus_name)) %>% 
+  select(Virus_name, eGFP_expression, Protein_id, Protein_name, Oligo_sequence)
+
+write_csv(Weingarten_data,"Results/Weingarten_data_filtered.csv") 
+
+```
